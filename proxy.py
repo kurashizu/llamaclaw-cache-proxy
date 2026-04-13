@@ -17,12 +17,14 @@ def detect_slot_from_meta(body):
 
             # 从 inbound meta 块里提取 channel 信息
             pattern = r'(?s)##\s*Inbound Context.*?\n([^\n]*?"channel"[^\n]*)'
-            match = re.search(pattern, content, re.IGNORECASE).group(1).strip()
+            search_result = re.search(pattern, content, re.IGNORECASE)
 
-            if "discord" in match.lower():
-                return 1
-            if "webchat" in match.lower():
-                return 2
+            if search_result:
+                match = search_result.group(1).strip()
+                if "discord" in match.lower():
+                    return 1
+                if "webchat" in match.lower():
+                    return 2
             return 0
     return 0
 
